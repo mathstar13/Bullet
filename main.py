@@ -96,10 +96,11 @@ def stringify(code,dc=True):
 			ps = ps.replace(r'\dollar','$')
 		return ps
 	elif code[0] == '(':
+		oretd = d['retd']
 		d['retd'] = 'hwekjghwireytqiowir34oitygiorqjweq05utwguiodhg239ythgiof;lut834hhyregw9et7y345gkw369yu5io3pw3rheyywreoyho34iyrhio34\\\\\\\\\\\\\\\\\\\\\\wrey4ykhio46joi9458ojorep;y'
 		parse(unlistify(code).replace('(','',1)[::-1].replace(')','',1)[::-1].replace(r'\;','*($KATDELKH%$GJOAHRSEMI*!').replace(';','\n').replace('*($KATDELKH%$GJOAHRSEMI*!',';'),'not')
 		retd = d['retd']
-		d['retd'] = 'not'
+		d['retd'] = oretd
 		if retd == 'hwekjghwireytqiowir34oitygiorqjweq05utwguiodhg239ythgiof;lut834hhyregw9et7y345gkw369yu5io3pw3rheyywreoyho34iyrhio34\\\\\\\\\\\\\\\\\\\\\\wrey4ykhio46joi9458ojorep;y':
 			return 'NULL'
 		else:
@@ -576,8 +577,8 @@ def parse(code,atc):
 			if cmd == 'OUT':
 				code = code.replace('OUT ','',1)
 				out(code)
-			elif cmd == 'VAR':
-				code = code.replace('VAR ','',1)
+			elif cmd.startswith('$'):
+				#code = code.replace('VAR ','',1)
 				#print(code,d['count'])
 				vari(code)
 			elif code.startswith('//'):

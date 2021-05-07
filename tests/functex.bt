@@ -2,7 +2,7 @@
 FUNCTION test $data{
 	RETURN $data
 }
-FUNCTION t{
-	RETURN 'test'
+FUNCTION t $dt{
+	RETURN $dt
 }
-OUT (test (t))
+OUT (test (t 'yay'))
