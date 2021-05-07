@@ -1,0 +1,8 @@
+FUNCTION greet{
+	IN $test = 'What is your name?'
+	OUT f'Hello, "$test"!'
+}
+FUNCTION __main__{
+	OUT 'Welcome to the greeter!'
+}
+COMPILE

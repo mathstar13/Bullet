@@ -1,0 +1,5 @@
+OUT 'Hello!'
+VAR yay = 'test'
+OUT yay
+ARRAY test = '1','2','a'
+OUT test 0

@@ -1,0 +1,6 @@
+CLASS yay
+FUNCTION test $yay{
+	OUT $yay
+}
+CLASS NULL
+yay.test 'Hello!'

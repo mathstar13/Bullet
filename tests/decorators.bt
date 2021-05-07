@@ -1,0 +1,11 @@
+CLASS TEST
+FUNCTION test $fn{
+	OUT 'Hello!'
+	APPEND_TO_FUNCTION 'fn',$fn
+	fn
+}
+CLASS NULL
+@TEST.test
+FUNCTION code{
+	OUT 'Hello!'
+}

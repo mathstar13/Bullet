@@ -1,0 +1,17 @@
+FUNCTION test{
+	OUT 'YAY'
+	IF $test == '0'{
+	$test = '1'
+	}
+	ELSE{
+	$test = '5'
+	}
+}
+FUNCTION yay $name,$value{
+	OUT $name
+	OUT $value
+}
+$test = '0'
+OBJECT $yay = {'yay':'test'}
+WHILE $test < 5,test
+FOREACH $yay,yay

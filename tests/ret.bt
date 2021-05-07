@@ -1,0 +1,5 @@
+FUNCTION test{
+	RETURN 'hello'
+}
+test
+OUT $test.return

@@ -1,0 +1,4 @@
+FUNCTION __main__{
+	OUT 'YAY'
+}
+COMPILE

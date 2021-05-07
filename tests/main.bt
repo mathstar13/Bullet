@@ -1,0 +1,103 @@
+FUNCTION RAISE $type,$text{
+	PYPARSE f'error("$type","$text")'
+}
+CLASS FILE
+FUNCTION READ $file{
+	PYPARSE f'setvar("$data",open("$file","r").read())'
+	RETURN $data
+}
+FUNCTION WRITE $file,$text{
+	PYPARSE f'open("$file","w").write("$text")'
+	RETURN 'True'
+}
+CLASS NULL
+FUNCTION QUIT $code=''{
+	PYPARSE f'quit($code)'
+}
+FUNCTION VERSION{
+	RETURN '0.1'
+}
+FUNCTION WAIT $AMM='1'{
+	PYPARSE f'from time import sleep\nsleep($AMM)'
+}
+FUNCTION GETFUNCTION $fn{
+	PYPARSE f'setvar("$ret",function["$fn"])'
+	RETURN $ret
+}
+FUNCTION APPEND_TO_FUNCTION $name,$fn{
+	PYPARSE f'function["$name"] = $fn'
+}
+CLASS MATH
+FUNCTION + $n1='0',$n2='0'{
+	PYPARSE f'setvar("$data",str($n1+$n2))'
+	RETURN $data
+}
+FUNCTION - $n1='0',$n2='0'{
+	PYPARSE f'setvar("$data",str($n1-$n2))'
+	RETURN $data
+}
+FUNCTION * $n1='0',$n2='0'{
+	PYPARSE f'setvar("$data",str($n1*$n2))'
+	RETURN $data
+}
+FUNCTION / $n1='0',$n2='0'{
+	PYPARSE f'setvar("$data",str($n1/$n2))'
+	RETURN $data
+}
+CLASS STR
+FUNCTION LEN $str{
+	PYPARSE f'setvar("$data",len("$str"))'
+	RETURN $STR.$data
+}
+FUNCTION SPLIT $str,$char=' '{
+	PYPARSE f'setvar("$data","$str".split("$char"))'
+	RETURN $data
+}
+}
+FUNCTION REPLACE $str,$text,$repv,$count='*'{
+	IF $count != '*'{
+	PYPARSE f"setvar('$data','$str'.replace('$text','$repv',$count))"
+	}
+	ELSE{
+	PYPARSE f"setvar('''$data''','''$str'''.replace('''$text''','''$repv'''))"
+	}
+	RETURN $data
+}
+FUNCTION STARTSWITH $var,$text{
+IF $var.startswith($text){
+	RETURN 'True'
+}
+ELSE{
+	RETURN 'False'
+}
+}
+FUNCTION GROUP $str,$value{
+	PYPARSE f'setvar("$data","$str"+"$value")'
+	RETURN $data
+}
+CLASS JSON
+FUNCTION PARSE $jsonstr{
+	PYPARSE f"from ast import literal_eval as le\nsetvar('''$data''',le('''$jsonstr'''))"
+	RETURN $data
+}
+CLASS NULL
+FUNCTION FUNCTION_VAR $fn,$name{
+	PYPARSE f'setvar("$d",function["$fn"]["head"])'
+	IF not 'no_function_var' in $d{
+	PYPARSE f'setvar("$data",var["$fn"]["$name"])'
+	RETURN $data
+	}
+	ELSE{
+	RAISE 'FunctionVarError',f'FunctionVar blocked by function header: "no_function_var" in function "$fn".'
+	}
+}
+FUNCTION GET_FUNCTION_HEADERS $fn{
+	PYPARSE f'setvar("$data",function["$fn"]["head"])'
+	RETURN $data
+}
+PYPARSE f'print(function)'
+//FUNCTION ['const','no_loop','no_function_var'] yay{
+//OUT 'YAY'
+//}
+//FUNCTION_VAR 'yay','adsf'
+//PYPARSE "call_function('GET_FUNCTION_HEADERS',['FUNCTION_VAR'])"

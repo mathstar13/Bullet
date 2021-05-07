@@ -1,0 +1,14 @@
+OUT 'Hello'
+OUT 'test'
+VAR $test = 'yay'
+OUT $test
+ARRAY $test = 'x','y','z'
+ARRAY_ITEM $test,'0'
+OUT $ARRAY_ITEM.return
+//OUT $test 0
+//OUT $test 1
+IN $hello = "hi"
+OUT $hello
+VAR $hello = NULL
+VAR $t = 'HI'
+IN $te = $t
