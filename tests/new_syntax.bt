@@ -2,5 +2,4 @@ OUT 'Hello!'
 $yay = 'test'
 OUT $yay
 ARRAY $test = '1','2','a'
-ARRAY_ITEM $test,'0'
-OUT $ARRAY_ITEM.return
+OUT (ARRAY_ITEM $test & '0')

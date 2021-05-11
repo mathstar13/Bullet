@@ -4,5 +4,5 @@ FUNCTION test $data{
 }
 FUNCTION t $dt{
 	RETURN $dt
-}
-OUT (test (t 'yay'))
+ARRAY $arr = '1','2','er',(t 'YAY')
+OUT (ARRAY_ITEM $arr,'3')

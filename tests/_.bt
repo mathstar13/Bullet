@@ -1,0 +1,4 @@
+FUNCTION retdata $data{
+	RETURN $data
+}
+OUT (retdata (INPUT 'YAY'))

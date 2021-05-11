@@ -7,11 +7,11 @@ FUNCTION test{
 	$test = '5'
 	}
 }
-FUNCTION yay $name,$value{
-	OUT $name
-	OUT $value
+FUNCTION yay $name & $value{
+	OUT (STR.GROUP 'Name: ' & $name)
+	OUT (STR.GROUP 'Value: ' & $value)
 }
 $test = '0'
-OBJECT $yay = {'yay':'test'}
-WHILE $test < 5,test
-FOREACH $yay,yay
+$yay = {'yay':'test'}
+WHILE $test < 5 & test
+FOREACH $yay & yay

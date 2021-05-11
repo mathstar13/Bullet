@@ -1,9 +1,15 @@
+import argparse
+parser = argparse.ArgumentParser(description='The parser of the Bullet Programming Language.')
+parser.add_argument('filename', metavar='F', help='The file to parse.')
+args = parser.parse_args()
+fn = args.filename
+from ast import literal_eval as le
 global var
 var = {}
 global function
-function = {'RAISE': {'code': 'PYPARSE f\'error("$type","$text")\'\n', 'attrib': ['$type', '$text'], 'head': []}, 'FILE.READ': {'code': 'PYPARSE f\'setvar("$data",open("$file","r").read())\'\nRETURN $data\n', 'attrib': ['$file'], 'head': []}, 'FILE.WRITE': {'code': 'PYPARSE f\'open("$file","w").write("$text")\'\nRETURN \'True\'\n', 'attrib': ['$file', '$text'], 'head': []}, 'QUIT': {'code': "PYPARSE f'quit($code)'\n", 'attrib': ["$code=''"], 'head': []}, 'VERSION': {'code': "RETURN '0.1'\n", 'attrib': [], 'head': []}, 'WAIT': {'code': "PYPARSE f'from time import sleep\\nsleep($AMM)'\n", 'attrib': ["$AMM='1'"], 'head': []}, 'GETFUNCTION': {'code': 'PYPARSE f\'setvar("$ret",function["$fn"])\'\nRETURN $ret\n', 'attrib': ['$fn'], 'head': []}, 'APPEND_TO_FUNCTION': {'code': 'PYPARSE f\'function["$name"] = $fn\'\n', 'attrib': ['$name', '$fn'], 'head': []}, 'MATH.+': {'code': 'PYPARSE f\'setvar("$data",str($n1+$n2))\'\nRETURN $data\n', 'attrib': ["$n1='0'", "$n2='0'"], 'head': []}, 'MATH.-': {'code': 'PYPARSE f\'setvar("$data",str($n1-$n2))\'\nRETURN $data\n', 'attrib': ["$n1='0'", "$n2='0'"], 'head': []}, 'MATH.*': {'code': 'PYPARSE f\'setvar("$data",str($n1*$n2))\'\nRETURN $data\n', 'attrib': ["$n1='0'", "$n2='0'"], 'head': []}, 'MATH./': {'code': 'PYPARSE f\'setvar("$data",str($n1/$n2))\'\nRETURN $data\n', 'attrib': ["$n1='0'", "$n2='0'"], 'head': []}, 'STR.LEN': {'code': 'PYPARSE f\'setvar("$data",len("$str"))\'\nRETURN $STR.$data\n', 'attrib': ['$str'], 'head': []}, 'STR.SPLIT': {'code': 'PYPARSE f\'setvar("$data","$str".split("$char"))\'\nRETURN $data\n', 'attrib': ['$str', "$char=' '"], 'head': []}, 'STR.REPLACE': {'code': 'IF $count != \'*\'{\nPYPARSE f"setvar(\'$data\',\'$str\'.replace(\'$text\',\'$repv\',$count))"\n}\nELSE{\nPYPARSE f"setvar(\'\'\'$data\'\'\',\'\'\'$str\'\'\'.replace(\'\'\'$text\'\'\',\'\'\'$repv\'\'\'))"\n}\nRETURN $data\n', 'attrib': ['$str', '$text', '$repv', "$count='*'"], 'head': []}, 'STR.STARTSWITH': {'code': "IF $var.startswith($text){\nRETURN 'True'\n}\nELSE{\nRETURN 'False'\n}\n", 'attrib': ['$var', '$text'], 'head': []}, 'STR.GROUP': {'code': 'PYPARSE f\'setvar("$data","$str"+$value)\'\nRETURN $data\n', 'attrib': ['$str', '$value'], 'head': []}, 'JSON.PARSE': {'code': 'PYPARSE f"from ast import literal_eval as le\\nsetvar(\'\'\'$data\'\'\',le(\'\'\'$jsonstr\'\'\'))"\nRETURN $data\n', 'attrib': ['$jsonstr'], 'head': []}, 'FUNCTION_VAR': {'code': 'PYPARSE f\'setvar("$d",function["$fn"]["head"])\'\nIF not \'no_function_var\' in $d{\nPYPARSE f\'setvar("$data",var["$fn"]["$name"])\'\nRETURN $data\n}\nELSE{\nRAISE \'FunctionVarError\',f\'FunctionVar blocked by function header: "no_function_var" in function "$fn".\'\n}\n', 'attrib': ['$fn', '$name'], 'head': []}, 'GET_FUNCTION_HEADERS': {'code': 'PYPARSE f\'setvar("$data",function["$fn"]["head"])\'\nRETURN $data\n', 'attrib': ['$fn'], 'head': []}}
+function = {'RAISE': {'code': 'PYPARSE f\'error("$type" & "$text")\'\n', 'attrib': ['$type', '$text'], 'head': [], 'sl': 2}, 'FILE.READ': {'code': 'PYPARSE f\'setvar("$data" & open("$file" & "r").read())\'\nRETURN $data\n', 'attrib': ['$file'], 'head': [], 'sl': 6}, 'FILE.WRITE': {'code': 'PYPARSE f\'open("$file" & "w").write("$text")\'\nRETURN \'True\'\n', 'attrib': ['$file', '$text'], 'head': [], 'sl': 10}, 'QUIT': {'code': "PYPARSE f'quit($code)'\n", 'attrib': ["$code=''"], 'head': [], 'sl': 15}, 'VERSION': {'code': "RETURN '0.1'\n", 'attrib': [], 'head': [], 'sl': 18}, 'WAIT': {'code': "PYPARSE f'from time import sleep\\nsleep($AMM)'\n", 'attrib': ["$AMM='1'"], 'head': [], 'sl': 21}, 'GETFUNCTION': {'code': 'PYPARSE f\'setvar("$ret" & function["$fn"])\'\nRETURN $ret\n', 'attrib': ['$fn'], 'head': [], 'sl': 24}, 'APPEND_TO_FUNCTION': {'code': '$data = (STR.REPLACE(\'BTCODE13561346543643653463nl\',f\'\\n\'))\nPYPARSE f\'function["$name"] = .replace("BTCODE13561346543643653463nl","\\n"))\'\n', 'attrib': ['$name', '$fn'], 'head': [], 'sl': 28}, 'MATH.+': {'code': 'PYPARSE f\'setvar("$data" & str($n1+$n2))\'\nRETURN $data\n', 'attrib': ["$n1='0'", "$n2='0'"], 'head': [], 'sl': 33}, 'MATH.-': {'code': 'PYPARSE f\'setvar("$data" & str($n1-$n2))\'\nRETURN $data\n', 'attrib': ["$n1='0'", "$n2='0'"], 'head': [], 'sl': 37}, 'MATH.*': {'code': 'PYPARSE f\'setvar("$data" & str($n1*$n2))\'\nRETURN $data\n', 'attrib': ["$n1='0'", "$n2='0'"], 'head': [], 'sl': 41}, 'MATH./': {'code': 'PYPARSE f\'setvar("$data" & str($n1/$n2))\'\nRETURN $data\n', 'attrib': ["$n1='0'", "$n2='0'"], 'head': [], 'sl': 45}, 'STR.LEN': {'code': 'PYPARSE f\'setvar("$data" & len("$str"))\'\nRETURN $STR.$data\n', 'attrib': ['$str'], 'head': [], 'sl': 50}, 'STR.SPLIT': {'code': 'PYPARSE f\'setvar("$data" & "$str".split("$char"))\'\nRETURN $data\n', 'attrib': ['$str', "$char=' '"], 'head': [], 'sl': 54}, 'STR.REPLACE': {'code': 'IF $count != \'*\'{\nPYPARSE f"setvar(\'$data\' & \'$str\'.replace(\'$text\' & \'$repv\' & $count))"\n}\nELSE{\nPYPARSE f"setvar(\'\'\'$data\'\'\' & \'\'\'$str\'\'\'.replace(\'\'\'$text\'\'\' & \'\'\'$repv\'\'\'))"\n}\nRETURN $data\n', 'attrib': ['$str', '$text', '$repv', "$count='*'"], 'head': [], 'sl': 58}, 'STR.STARTSWITH': {'code': "IF $var.startswith($text){\nRETURN 'True'\n}\nELSE{\nRETURN 'False'\n}\n", 'attrib': ['$var', '$text'], 'head': [], 'sl': 67}, 'STR.GROUP': {'code': 'PYPARSE f\'setvar("$data" & "$str"+"$value")\'\nRETURN $data\n', 'attrib': ['$str', '$value'], 'head': [], 'sl': 75}, 'JSON.PARSE': {'code': 'PYPARSE f"from ast import literal_eval as le\\nsetvar(\'\'\'$data\'\'\' & le(\'\'\'$jsonstr\'\'\'))"\nRETURN $data\n', 'attrib': ['$jsonstr'], 'head': [], 'sl': 80}, 'FUNCTION_VAR': {'code': 'PYPARSE f\'setvar("$d" & function["$fn"]["head"])\'\nIF not \'no_function_var\' in $d{\nPYPARSE f\'setvar("$data" & var["$fn"]["$name"])\'\nRETURN $data\n}\nELSE{\nRAISE \'FunctionVarError\' & f\'FunctionVar blocked by function header: "no_function_var" in function "$fn".\'\n}\n', 'attrib': ['$fn', '$name'], 'head': [], 'sl': 85}, 'GET_FUNCTION_HEADERS': {'code': 'PYPARSE f\'setvar("$data" & function["$fn"]["head"])\'\nRETURN $data\n', 'attrib': ['$fn'], 'head': [], 'sl': 95}, 'INPUT': {'code': 'IN $data = $text\nRETURN $data\n', 'attrib': ['$text'], 'head': [], 'sl': 99}}
 global d
-d = {'atc':'not','count':0,'nl':'','if':True,'fn':'tests/'+input('Filename:'),'err':'none','else':False,'em':'none','funct':'not','ov':{},'close-count':0,'st':True,'prefix':'','sendto':'not','retd':'not'}
+d = {'atc':'not','count':0,'nl':'','if':True,'fn':fn,'err':'none','else':False,'em':'none','funct':'not','ov':{},'close-count':0,'st':True,'prefix':'','sendto':'not','retd':'not','evalparen':False}
 global eh
 eh = {}
 def getvar(vn):
@@ -57,44 +63,18 @@ def stringify(code,dc=True):
 	code = listify(code)
 	#if dc:
 		#del code[length(code) - 1]
+	co = True
+	try:
+		code[0]
+	except IndexError:
+		error('DataError','No data supplied for argument.')
+		quit()
 	try:
 		code[1]
 	except IndexError:
-		pass
-	if code[0] == "'" or code[1] == "'":
-		ps = ''
-		for item in code:
-			if item != "'":
-				ps += item
-		if ps.startswith('f'):
-			ps = ps.replace('f','',1)
-			if d['funct'] == 'not':
-				for vn,vt in var.items():
-					if vn.startswith('$'):
-						ps = str(ps).replace(str(vn),str(vt))
-			else:
-				for vn,vt in var[d['funct']].items():
-					if vn.startswith('$'):
-						ps = str(ps).replace(str(vn),str(vt))
-			ps = ps.replace(r'\dollar','$')
-		return ps
-	elif code[0] == '"' or code[1] == '"':
-		ps = ''
-		for item in code:
-			if item != '"':
-				ps += item
-		if ps.startswith('f'):
-			ps = ps.replace('f','',1)
-			if d['funct'] == 'not':
-				for vn,vt in var.items():
-					if vn.startswith('$'):
-						ps = ps.replace(vn,vt)
-			else:
-				for vn,vt in var[d['funct']].items():
-					if vn.startswith('$'):
-						ps = ps.replace(vn,vt)
-			ps = ps.replace(r'\dollar','$')
-		return ps
+		co = False	
+	if code[0] == '[' or code[0] == '{':
+		return le(oc.replace('&',','))
 	elif code[0] == '(':
 		oretd = d['retd']
 		d['retd'] = 'hwekjghwireytqiowir34oitygiorqjweq05utwguiodhg239ythgiof;lut834hhyregw9et7y345gkw369yu5io3pw3rheyywreoyho34iyrhio34\\\\\\\\\\\\\\\\\\\\\\wrey4ykhio46joi9458ojorep;y'
@@ -105,18 +85,71 @@ def stringify(code,dc=True):
 			return 'NULL'
 		else:
 			return retd
-	else:
+	elif oc.startswith('funct: '):
+		return function[oc.replace('funct: ','',1)]
+	elif code[0] == '$':
 		try:
-			int(code[0])
-			return int(code[0])
-		except ValueError:
-			try:
 				if d['funct'] == 'not':
 					return var[unlistify(code)]
 				else:
 					return var[d['funct']][unlistify(code)]
-			except KeyError:
+		except KeyError:
 				error('VarError',f'Could not find var {oc}.')
+				quit()
+	elif code[0] == "'":
+		ps = ''
+		for item in code:
+			if item != "'":
+				ps += item
+		return ps
+	elif code[0] == '"':
+		ps = ''
+		for item in code:
+			if item != '"':
+				ps += item
+		return ps
+	elif co:
+		if code[0] == '"' or code[1] == '"':
+			ps = ''
+			for item in code:
+				if item != '"':
+					ps += item
+			if ps.startswith('f'):
+				ps = ps.replace('f','',1)
+				if d['funct'] == 'not':
+					for vn,vt in var.items():
+						if vn.startswith('$'):
+							ps = ps.replace(vn,vt)
+				else:
+					for vn,vt in var[d['funct']].items():
+						if vn.startswith('$'):
+							ps = ps.replace(vn,vt)
+				ps = ps.replace(r'\dollar','$').replace(r'\n','\n')
+			return ps
+		elif code[0] == "'" or code[1] == "'":
+			ps = ''
+			for item in code:
+				if item != "'":
+					ps += item
+			if ps.startswith('f'):
+				ps = ps.replace('f','',1)
+				if d['funct'] == 'not':
+					for vn,vt in var.items():
+						if vn.startswith('$'):
+							ps = str(ps).replace(str(vn),str(vt))
+				else:
+					for vn,vt in var[d['funct']].items():
+						if vn.startswith('$'):
+							ps = str(ps).replace(str(vn),str(vt))
+				ps = ps.replace(r'\dollar','$').replace(r'\n','\n')
+				return ps
+	else:
+		try:
+			int(oc)
+			oc = int(oc)
+		except ValueError:
+				error('DataError',f'Invalid Data: "{oc}"')
+				quit()
 def listify(string):
 	l = []
 	for char in string:
@@ -134,7 +167,7 @@ def length(li):
 	return l
 def out(code):
 	print(stringify(code))
-def callfunction(code):
+def callfunction(code,rq=False):
 	from ast import literal_eval as le
 	if code.split()[0] in function.keys():
 		ofn = d['funct']
@@ -163,12 +196,13 @@ def callfunction(code):
 			for item in function[functname]['attrib']:
 				try:
 					try:
+						item.split('=')[1]
 						n = item.split('=')[0]
 						opt = True
 					except IndexError:
 						n = item
 						opt = False
-					var[functname][n] = stringify(code.split(',')[c])
+					var[functname][n] = stringify(code.split(' & ')[c])
 				except IndexError:
 					if opt:
 						var[functname][n] = stringify(item.split('=')[1])
@@ -260,7 +294,7 @@ def fn(code):
 		s = False
 	code = code.replace(code.split()[0]+' ','',1)
 	if s:
-		for item in code.replace(d['atc']+' ','',1).split(','):
+		for item in code.replace(d['atc']+' ','',1).split(' & '):
 			if not item.startswith('$') and d['prefix'] != '':
 				item = '$'+item
 			if checkvn(item):
@@ -447,8 +481,8 @@ def changestr(code):
 		else:
 			var[d['funct']][d['prefix']+code] = var[d['funct']][d['prefix']+code].title()
 def WHILE(code):
-	fnn = code.split(',')[1]
-	cnd = code.split(',')[0]
+	fnn = code.split(' & ')[1]
+	cnd = code.split(' & ')[0]
 	if 'no_while' in function[fnn]['head']:
 		error('WhileError',f'While blocked by function header: "no_while" in function "{fnn}"')
 		return True
@@ -459,8 +493,8 @@ def WHILE(code):
 		for line in function[fnn]['code'].splitlines():
 			parse(line,d['atc'])
 def foreach(code):
-	fnn = code.split(',')[1]
-	cnd = code.split(',')[0]
+	fnn = code.split(' & ')[1]
+	cnd = code.split(' & ')[0]
 	if 'no_foreach' in function[fnn]['head']:
 		error('ForeachError',f'Foreach blocked by function header: "no_foreach" in function "{fnn}"')
 		return True
@@ -486,25 +520,22 @@ def foreach(code):
 def isset(code):
 	if d['funct'] == 'not':
 		if code.split()[0] in var.keys():
-			setvar('$ISSET.return','True')
+			nret('ISSET','True')
 		else:
-			setvar('$ISSET.return','False')
+			nret('ISSET','False')
 	else:
 		if code.split()[0] in var[d['funct']].keys():
-			setvar('$ISSET.return','True')
+			nret('ISSET','True')
 		else:
-			setvar('$ISSET.return','False')
+			nret('ISSET','False')
 def array_item(code):
-	item = stringify(code.split(',')[1])
+	item = stringify(code.split(' & ')[1])
 	try:
 		item = int(item)
-	except TypeError:
+	except ValueError:
 		pass
-	lis = code.split(',')[0]
-	if d['funct'] == 'not':
-		setvar('$ARRAY_ITEM.return',var[lis][item])
-	else:
-		setvar('$ARRAY_ITEM.return',var[d['funct']][lis][item])
+	lis = stringify(code.split(' & ')[0])
+	nret('ARRAY_ITEM',lis[item])
 def obj(code):
 	from ast import literal_eval as le
 	vn = code.split()[0]
@@ -512,7 +543,7 @@ def obj(code):
 	if checkvn(vn):
 		setvar(vn,le(item))
 def err_h(code):
-	eh[code.split(',')[0]] = code.split(',')[1]
+	eh[code.split(' & ')[0]] = code.split(' & ')[1]
 def CLASS(code):
 	if code == 'NULL':
 		d['prefix'] = ''
@@ -528,7 +559,7 @@ def call_function(code,appendargs=[]):
 	d['funct'] = d['prefix']+functname
 	attrib = {}
 	c = 0
-	d['count'] = 0
+	d['funct_lnc'] = 0
 	appendargs = appendargs[::-1]
 	var[functname] = {}
 	if strattrib != '':
@@ -549,7 +580,7 @@ def call_function(code,appendargs=[]):
 					except IndexError:
 						n = item
 						opt = False
-					var[functname][n] = stringify(strattrib.split(',')[c])
+					var[functname][n] = stringify(strattrib.split(' & ')[c])
 				except IndexError:
 					if opt:
 						try:
@@ -562,8 +593,31 @@ def call_function(code,appendargs=[]):
 						return d['err']
 			c += 1
 	for line in function[functname]['code']:
-		d['count'] += 1
+		d['funct_lnc'] += 1
 		parse(line,d['atc'])
+def nret(loc,data,strnif=False):
+	if strnif:
+		data = stringify(data)
+	if (d['retd'] == 'not'):
+		setvar('$' + loc + '.return',data,False)
+	else:
+		d['retd'] = data
+def sf(code):
+	from ast import literal_eval as le
+	if listify(code)[0] == ' ':
+		code = code.replace(' ','',1)
+	if listify(code.split('{')[0])[::-1][0] == ' ':
+		code = code.split('{')[0][::-1].replace(' ','',1)[::-1] + '{' + code.split('{')[1]
+	if code.startswith('{'):
+		attrib = False
+	else:
+		attrib = True
+	data = {'code':code.split('{')[1][::-1].replace('}','',1)[::-1],'head':[],'attrib':[],'sl':d['count']}
+	if attrib:
+		for attn in code.split('{')[0].split(' & '):
+			data['attrib'].append(attn)
+	retdt = str(data).replace("'",r"\'")
+	nret('SHORT_FUNCTION',f"\\'{retdt}\\'")
 def parse(code,atc):
 	if atc == 'not':
 		if d['if']:
@@ -577,27 +631,33 @@ def parse(code,atc):
 			if cmd == 'OUT':
 				code = code.replace('OUT ','',1)
 				out(code)
+				nret(cmd,'True')
 			elif cmd.startswith('$'):
 				#code = code.replace('VAR ','',1)
-				#print(code,d['count'])
 				vari(code)
+				nret(cmd,'True')
 			elif code.startswith('//'):
 				pass
 			elif cmd == 'ARRAY':
 				code = code.replace('ARRAY ','',1)
 				arr(code)
+				nret(cmd,'True')
 			elif cmd == 'INCLUDE':
 				code = code.replace('INCLUDE ','',1)
 				get(code)
+				nret(cmd,'True')
 			elif cmd == 'IN':
 				code = code.replace('IN ','',1)
 				IN(code)
+				nret(cmd,'True')
 			elif cmd == 'FUNCTION':
 				code = code.replace('FUNCTION ','',1)
 				fn(code)
+				nret(cmd,'True')
 			elif cmd == 'PYPARSE':
 				code = code.replace('PYPARSE ','',1)
 				parsepy(code)
+				nret(cmd,'True')
 			elif cmd == 'IF':
 				code = code.replace('IF ','',1)
 				IF(code)
@@ -642,6 +702,8 @@ def parse(code,atc):
 			elif cmd.startswith('@'):
 				code = code.replace('@','',1)
 				d['sendto'] = code
+			elif cmd == 'SHORT_FUNCTION' or cmd == 'SHORT_FUNCTION{':
+				sf(code.replace('SHORT_FUNCTION','',1)[::-1].replace('}','',1)[::-1])
 			else:
 				callfunction(code)
 			if err == '' and d['err'] == 'none':
@@ -664,8 +726,9 @@ def parse(code,atc):
 			oatc = d['atc']
 			d['atc'] = 'not'
 			if d['sendto'] != 'not':
-				#callfunction(d['sendto']+' "'+str(function[oatc]).replace("'",'%%ID67230872051QUOTE%%').replace('"','%%ID6723087205QUOTE%%')+'"')
-				functname = d['sendto'].split(' ')[0]
+				print(d['sendto']+' '+str(function[oatc]).replace(r'\n','BTCODE13561346543643653463nl'))
+				callfunction(d['sendto']+' '+str(function[oatc]).replace(r'\n','BTCODE13561346543643653463nl'),True)
+				'''functname = d['sendto'].split(' ')[0]
 				strattrib = d['sendto'].replace(functname+' ','',1)
 				attrib = {}
 				c = 0
@@ -688,7 +751,7 @@ def parse(code,atc):
 								except IndexError:
 									n = item
 									opt = False
-								var[functname][n] = stringify(strattrib.split(',')[c])
+								var[functname][n] = stringify(strattrib.split(' & ')[c])
 							except IndexError:
 								if opt:
 									try:
@@ -701,7 +764,7 @@ def parse(code,atc):
 									return d['err']
 						c += 1
 				for line in function[functname]['code']:
-					parse(line,'not')
+					parse(line,'not')'''
 				d['sendto'] = 'not'
 		else:
 			d['close-count'] += charforeach('{',code)
@@ -740,10 +803,9 @@ def start(d,count):
 try:
 	open(d["fn"])
 except FileNotFoundError:
-	print(f'InvalidFileNameError: Invalid filename, "{d["fn"]}".')
-	quit()
-ld = open('bullet/UserPreferences/runonstart.bt').read()+'\n'+open(d["fn"]).read()
-for line in open('bullet/UserPreferences/autoinclude.txt'):
+	error('InvalidFileNameError',f'Invalid filename, "{d["fn"]}".')
+ld = open('Bullet/UserPreferences/runonstart.bt').read()+'\n'+open(d["fn"]).read()
+for line in open('Bullet/UserPreferences/autoinclude.txt'):
 	get(line)
 d['count'] = 0
 count = 0
